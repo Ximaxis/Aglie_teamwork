@@ -19,18 +19,19 @@ from slugify import slugify
 class Index(View):
     title = 'Главная'
     template_name = 'mainapp/index.html'
-    categories = CategoryPost.objects.all()
-    context = {
-        'title': title,
-        'categories': categories,
-    }
 
     def get(self, request, slug="all", *args, **kwargs):
         """
-        ТЕКСТ
+        Контроллер главной страницы (index.html).
         :param request - ТЕКСТ
-        :return: render(request, self.template_name, self.context) - ТЕКСТ
+        :return: render(request, self.template_name, self.context) - возвращается запрос, шаблон и данные context:
+            все заголовок, список категорий, статьи
         """
+        categories = CategoryPost.objects.all()
+        context = {
+            'title': self.title,
+            'categories': categories,
+        }
 
         if slug == "all":
             articles = Post.objects.filter(
@@ -39,8 +40,9 @@ class Index(View):
             category = get_object_or_404(CategoryPost, slug=slug)
             articles = Post.objects.filter(
                 post_status='Apr', category_id=category)
-        self.context.update({'articles': articles})
-        return render(request, self.template_name, self.context)
+        context.update({'articles': articles})
+
+        return render(request, self.template_name, context)
 
 
 class HelpPage(View):
