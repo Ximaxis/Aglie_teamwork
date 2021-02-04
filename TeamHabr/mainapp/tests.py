@@ -8,7 +8,6 @@ class BasicTest(TestCase):
         comment = CategoryPost()
         comment.name = 'TestCategory'
         comment.save()
-
         read_record = CategoryPost.objects.get(pk=1)
         self.assertEqual(read_record, comment)
 
