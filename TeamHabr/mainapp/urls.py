@@ -58,4 +58,8 @@ urlpatterns = [
         mainapp.HelpPage.as_view(),
         name='help'),
 
+    path(
+        'search_results',
+        mainapp.SearchResults.as_view(),
+        name='search_results'),
 ]

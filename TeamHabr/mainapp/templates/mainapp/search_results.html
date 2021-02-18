@@ -1,0 +1,14 @@
+{% extends 'mainapp_base.html' %}
+{% load static %}
+
+{% block content %}
+{% if object_list %}
+    <ul>
+    {% for post in object_list %}
+        <li><a href="{% url 'main:post' post.slug %}">{{post.title}}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Ничего не найдено</p>
+{% endif %}
+{% endblock %}

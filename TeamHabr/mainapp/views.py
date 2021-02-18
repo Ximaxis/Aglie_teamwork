@@ -17,6 +17,7 @@ import random
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.template import RequestContext
+from django.db.models import Q
 
 
 def likes(request, pk, type_likes):
@@ -354,3 +355,13 @@ def handler(request, *args, **argv):
 #     # print(request, response)
 #     response.status_code = 500
 #     return response
+
+class SearchResults(ListView):
+    model = Post
+    template_name = 'mainapp/search_results.html'
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Post.objects.filter(Q(title__icontains=query))
+
+        return object_list
